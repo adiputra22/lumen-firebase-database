@@ -19,19 +19,45 @@ class AppFirebaseClient
         ]);
     }
 
+    private function generateResponse($response)
+    {
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     public function gets()
     {
-        $response = $this->client->request('GET', $this->table);
-            
-        return json_decode($response->getBody()->getContents(), true);
+        return $this->generateResponse($this->client->request('GET', $this->table));
     }
 
     public function post(array $postData)
     {
-        $response = $this->client->request('POST', $this->table, [
+        return $this->generateResponse($this->client->request('POST', $this->table, [
             'json' => $postData
-        ]);
-        
-        return json_decode($response->getBody()->getContents(), true);
+        ]));
+    }
+
+    public function get(string $clubId)
+    {
+        return $this->generateResponse($this->client->request(
+            'GET', 
+            $this->table . '/' . $clubId . '.json'
+        ));
+    }
+
+    public function update(string $clubId, array $postData)
+    {
+        $this->generateResponse($this->client->request(
+            'PUT', 
+            $this->table . '/' . $clubId . '.json',
+            ['json' => $postData]
+        ));
+    }
+
+    public function delete(string $clubId)
+    {
+        $this->generateResponse($this->client->request(
+            'DELETE', 
+            $this->table . '/' . $clubId . '.json'
+        ));
     }
 }

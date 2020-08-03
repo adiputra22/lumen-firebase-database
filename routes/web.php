@@ -24,3 +24,18 @@ $router->get('/clubs', [
     'as' => 'clubs.index', 
     'uses' => 'ClubController@index'
 ]);
+
+$router->get('/clubs/{clubId}', [
+    'as' => 'clubs.show', 
+    'uses' => 'ClubController@show'
+]);
+
+$router->put('/clubs/{clubId}', [
+    'as' => 'clubs.update', 
+    'uses' => 'ClubController@update'
+]);
+
+$router->delete('/clubs/{clubId}', [
+    'as' => 'clubs.destroy', 
+    'uses' => 'ClubController@destroy'
+]);
